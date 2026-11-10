@@ -1,10 +1,10 @@
 <?php
-namespace Databade\Seeders;
+namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class IncommingLetterSeeder extends Seeder
+class IncomingLetterSeeder extends Seeder
 {
     public function run(): void
     {

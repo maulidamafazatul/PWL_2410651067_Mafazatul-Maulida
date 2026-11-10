@@ -3,7 +3,6 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use League\CommonMark\Extension\CommonMark\Node\Block\BlockQuote;
 
 return new class extends Migration
 {
@@ -15,7 +14,7 @@ return new class extends Migration
         Schema:: create('incoming_letters', function(Blueprint $table){
             $table->id();
             $table->string('nomor_surat');
-            $table->string('tanggal');
+            $table->date('tanggal');
             $table->string('pengirim');
             $table->string('perihal');
             $table->string('keterangan')->nullable();
