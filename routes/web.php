@@ -2,6 +2,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SuratMasukController;
+use App\Http\Controllers\SuratKeluarController;
 
 // Hanya untuk tamu (belum login)
 Route::middleware('guest')->group(function () {
@@ -22,4 +23,13 @@ Route::middleware('auth')->group(function () {
     Route::resource('surat-masuk', SuratMasukController::class)
         ->only(['index', 'show'])
         ->parameters(['surat-masuk' => 'id']);
+        
+    Route::resource('surat-keluar', SuratKeluarController::class)
+        ->except(['index', 'show'])
+        ->parameters(['surat-keluar' => 'id'])
+        ->middleware('can:manage-letters');
+
+    Route::resource('surat-keluar', SuratKeluarController::class)
+        ->only(['index', 'show'])
+        ->parameters(['surat-keluar' => 'id']);
 });
