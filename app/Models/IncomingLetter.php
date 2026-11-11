@@ -9,10 +9,10 @@ class IncomingLetter extends Model
 {
     // use HasFactory;
 
-    // protected $fillable = [
-    //     'nomor_surat',
-    //     'tanggal',
-    //     'pengirim',
-    //     'keterangan',
-    // ];
+    protected $fillable = [
+        'nomor_surat',
+        'tanggal',
+        'pengirim',
+        'keterangan',
+    ];
 }

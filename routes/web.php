@@ -7,8 +7,11 @@ Route::get('/', function () {
     return view('dashboard');
 })->name('dashboard');
 
-Route::get('/surat-masuk', [SuratMasukController::class, 'index'])
-    ->name('surat-masuk.index');
+// Route::get('/surat-masuk', [SuratMasukController::class, 'index'])
+//     ->name('surat-masuk.index');
 
-Route::get('/surat-masuk/{id}', [SuratMasukController::class, 'show'])
-    ->name('surat-masuk.show');
+// Route::get('/surat-masuk/{id}', [SuratMasukController::class, 'show'])
+//     ->name('surat-masuk.show');
+
+Route::resource('surat-masuk', SuratMasukController::class)
+    ->parameters(['surat-masuk' => 'id']);
