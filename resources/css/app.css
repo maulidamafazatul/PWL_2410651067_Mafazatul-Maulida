@@ -7,3 +7,67 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+/*
+ * Komponen UI SIM-Surat
+ * Pola yang dipakai berulang dibuat sekali di sini dengan @apply,
+ * lalu dipanggil dari Blade lewat satu nama kelas (btn, form-input, dst).
+ */
+ @layer components {
+    /* ---- Tombol ---- */
+    .btn {
+        @apply inline-flex cursor-pointer items-center justify-center rounded-lg px-3 py-1.5 text-sm font-medium shadow-sm transition focus:outline-none focus:ring-2 focus:ring-offset-2;
+    }
+    .btn-primary {
+        @apply bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500;
+    }
+    .btn-secondary {
+        @apply bg-white text-slate-700 ring-1 ring-slate-300 hover:bg-slate-50 focus:ring-slate-400;
+    }
+    .btn-info {
+        @apply bg-sky-50 text-sky-700 ring-1 ring-sky-200 hover:bg-sky-100 focus:ring-sky-400;
+    }
+    .btn-warning {
+        @apply bg-amber-50 text-amber-700 ring-1 ring-amber-200 hover:bg-amber-100 focus:ring-amber-400;
+    }
+    .btn-danger {
+        @apply bg-red-50 text-red-700 ring-1 ring-red-200 hover:bg-red-100 focus:ring-red-400;
+    }
+ 
+    /* ---- Form ---- */
+    .form-label {
+        @apply mb-1 block text-sm font-medium text-slate-700;
+    }
+    .form-input {
+        @apply block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm placeholder:text-slate-400 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200;
+    }
+    .form-error {
+        @apply mt-1 text-sm text-red-600;
+    }
+ 
+    /* ---- Kartu ---- */
+    .card {
+        @apply rounded-xl bg-white shadow-sm ring-1 ring-slate-200;
+    }
+}
+
+/*
+ * Palet warna SIM-Surat (referensi: Linktree)
+ * Didefinisikan SEKALI di sini (design token). Semua kelas seperti
+ * bg-brand-700, text-accent, bg-lilac otomatis tersedia di Blade.
+ */
+ @theme {
+    --color-brand-50:  #f3f7ee;
+    --color-brand-100: #e4edd9;
+    --color-brand-200: #c9dbb4;
+    --color-brand-300: #a4c280;
+    --color-brand-400: #78a051;
+    --color-brand-500: #5a8039;
+    --color-brand-600: #436a2c;
+    --color-brand-700: #304e21; /* hijau tua  (#304E21) */
+    --color-brand-800: #263f1a;
+    --color-brand-900: #1b2d12;
+    --color-brand-950: #0f1a0a;
+ 
+    --color-accent: #d4e451;    /* lime       (#D4E451) */
+    --color-lilac:  #e2c2e6;    /* lilac      (#E2C2E6) */
+}
