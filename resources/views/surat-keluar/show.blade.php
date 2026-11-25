@@ -18,6 +18,16 @@
       <dd class="font-medium text-slate-900">{{ $surat->perihal }}</dd>
       <dt class="text-slate-500">Keterangan</dt>
       <dd class="font-medium text-slate-900">{{ $surat->keterangan ?? '-' }}</dd>
+      <dt class="text-slate-500">Kategori</dt>
+      <dd class="font-medium text-slate-900">
+        <span class="rounded-full bg-violet-100 px-3 py-1 text-xs font-medium text-violet-700">{{ $surat->category?->nama ?? 'Tanpa kategori' }}</span>
+      </dd>
+      @if ($surat->lampiran)
+        <dt class="text-slate-500">Lampiran</dt>
+        <dd class="font-medium">
+          <a href="{{ asset('storage/' . $surat->lampiran) }}" target="_blank" rel="noopener" class="text-indigo-600 underline">Lihat lampiran</a>
+        </dd>
+      @endif
     </dl>
     <div class="mt-6">
       <a href="{{ route('surat-keluar.index') }}" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50">Kembali</a>

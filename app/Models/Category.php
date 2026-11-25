@@ -13,4 +13,8 @@ class Category extends Model
     {
         return $this->hasMany(IncomingLetter::class);
     }
+    public function outgoingLetters()
+    {
+    return $this->hasMany(OutgoingLetter::class);
+    }
 }

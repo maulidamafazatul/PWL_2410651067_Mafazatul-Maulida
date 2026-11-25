@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Edit Surat Masuk')
+@section('title', 'Edit Surat Keluar')
 @section('content')
-  <h1 class="mb-1 text-3xl font-bold text-slate-900">Edit Surat Masuk</h1>
-  <p class="mb-6 text-slate-500">Perbarui data surat masuk.</p>
+  <h1 class="mb-1 text-3xl font-bold text-slate-900">Edit Surat Keluar</h1>
+  <p class="mb-6 text-slate-500">Perbarui data surat keluar.</p>
   <div class="max-w-2xl rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-  <form action="{{ route('surat-masuk.update', $surat->id) }}" method="POST" enctype="multipart/form-data">
+  <form action="{{ route('surat-keluar.update', $surat->id) }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
     <p class="mb-5 flex flex-col gap-1.5 text-sm font-semibold text-slate-900">Nomor Surat :
@@ -15,9 +15,9 @@
         <input type="date" name="tanggal" value="{{ old('tanggal', $surat->tanggal) }}" class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 font-normal text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200">
         @error('tanggal') <span class="text-sm font-normal text-red-600">{{ $message }}</span> @enderror
     </p>
-    <p class="mb-5 flex flex-col gap-1.5 text-sm font-semibold text-slate-900">Pengirim :
-        <input name="pengirim" value="{{ old('pengirim', $surat->pengirim) }}" class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 font-normal text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200">
-        @error('pengirim') <span class="text-sm font-normal text-red-600">{{ $message }}</span> @enderror
+    <p class="mb-5 flex flex-col gap-1.5 text-sm font-semibold text-slate-900">Tujuan :
+        <input name="tujuan" value="{{ old('tujuan', $surat->tujuan) }}" class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 font-normal text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200">
+        @error('tujuan') <span class="text-sm font-normal text-red-600">{{ $message }}</span> @enderror
     </p>
     <p class="mb-5 flex flex-col gap-1.5 text-sm font-semibold text-slate-900">Perihal :
         <input name="perihal" value="{{ old('perihal', $surat->perihal) }}" class="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 font-normal text-slate-900 focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200">
@@ -51,7 +51,7 @@
     </p>
     <div class="flex items-center gap-3">
       <button type="submit" class="rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white hover:bg-indigo-700">Simpan Perubahan</button>
-      <a href="{{ route('surat-masuk.index') }}" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50">Batal</a>
+      <a href="{{ route('surat-keluar.index') }}" class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-600 hover:bg-slate-50">Batal</a>
     </div>
   </form>
   </div>

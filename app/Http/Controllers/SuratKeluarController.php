@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\OutgoingLetter;   
+use App\Models\OutgoingLetter;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class SuratKeluarController extends Controller
 {
@@ -20,6 +21,7 @@ class SuratKeluarController extends Controller
                         ->orWhere('perihal', 'like', "%{$q}%");
             });
         }
+
         if ($request->filled('category_id')) {
             $query->where('category_id', $request->input('category_id'));
         }
@@ -29,31 +31,40 @@ class SuratKeluarController extends Controller
 
         return view('surat-keluar.index', compact('suratKeluar', 'categories'));
     }
+
     public function create()
     {
         $categories = Category::orderBy('nama')->get();
         return view('surat-keluar.create', compact('categories'));
     }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
             'nomor_surat' => 'required|string|max:255',
-            'tanggal' => 'required|date',
-            'pengirim' => 'required|string|max:255',
-            'perihal' => 'required|string|max:255',
-            'keterangan' => 'nullable|string',
+            'tanggal'     => 'required|date',
+            'tujuan'      => 'required|string|max:255',
+            'perihal'     => 'required|string|max:255',
+            'keterangan'  => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
             'lampiran'    => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
+        if ($request->hasFile('lampiran')) {
+            $validated['lampiran'] = $request->file('lampiran')
+                ->store('lampiran-surat', 'public');
+        }
+
         OutgoingLetter::create($validated);
+
         return redirect()->route('surat-keluar.index')
-            ->with('success', 'Surat berhasil ditambahkan.');
+            ->with('success', 'Surat keluar berhasil ditambahkan.');
     }
 
-    public function show($id) {
-        $surat = OutgoingLetter::findOrFail($id);
-    return view('surat-keluar.show', compact('surat'));
+    public function show($id)
+    {
+        $surat = OutgoingLetter::with('category')->findOrFail($id);
+        return view('surat-keluar.show', compact('surat'));
     }
 
     public function edit($id)
@@ -66,25 +77,45 @@ class SuratKeluarController extends Controller
     public function update(Request $request, $id)
     {
         $surat = OutgoingLetter::findOrFail($id);
+
         $validated = $request->validate([
             'nomor_surat' => 'required|string|max:255',
-            'tanggal' => 'required|date',
-            'pengirim' => 'required|string|max:255',
-            'perihal' => 'required|string|max:255',
-            'keterangan' => 'nullable|string',
+            'tanggal'     => 'required|date',
+            'tujuan'      => 'required|string|max:255',
+            'perihal'     => 'required|string|max:255',
+            'keterangan'  => 'nullable|string',
+            'category_id' => 'nullable|exists:categories,id',
+            'lampiran'    => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
         ]);
 
-        $surat->update($validated);
+        if ($request->hasFile('lampiran')) {
+            $pathLama = $surat->lampiran;
+            $validated['lampiran'] = $request->file('lampiran')
+                ->store('lampiran-surat', 'public');
+            $surat->update($validated);
+            if ($pathLama) {
+                Storage::disk('public')->delete($pathLama);
+            }
+        } else {
+            unset($validated['lampiran']);
+            $surat->update($validated);
+        }
+
         return redirect()->route('surat-keluar.index')
-            ->with('success', 'Surat berhasil diperbarui.');
+            ->with('success', 'Surat keluar berhasil diperbarui.');
     }
 
     public function destroy($id)
     {
         $surat = OutgoingLetter::findOrFail($id);
+        $path = $surat->lampiran;
         $surat->delete();
 
+        if ($path) {
+            Storage::disk('public')->delete($path);
+        }
+
         return redirect()->route('surat-keluar.index')
-            ->with('success', 'Surat berhasil dihapus.');
+            ->with('success', 'Surat keluar berhasil dihapus.');
     }
 }
